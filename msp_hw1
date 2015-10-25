@@ -1,0 +1,404 @@
+#include "msp430.h"                     ; #define controlled include file
+        NAME    main                    ; module name
+        PUBLIC  main                    ; make the main label vissible
+                                        ; outside this module
+        ORG     0FFFEh
+        DC16    init                    ; set reset vector to 'init' label
+        RSEG    CSTACK                  ; pre-declaration of segment
+        RSEG    CODE                    ; place program in 'CODE' segment
+init:   MOV     #SFE(CSTACK), SP        ; set up stack
+;===============主程式=======================================
+main:   NOP                             ; main program
+        MOV.W   #WDTPW+WDTHOLD,&WDTCTL  ; Stop watchdog timer
+        
+        ;LED1:red   LED2:green 
+        ;紅亮 綠亮 5
+        mov.b  #00000001b , P1DIR        
+        mov.b  #00000001b , P1OUT
+        mov.b  #10000000b , P4DIR
+        mov.b  #10000000b , P4OUT
+        MOV #1000 , R6    
+        JMP Delay1_2
+        
+;===============Delay1迴圈==============       
+Delay1_2:
+        sub #1  , R6    ;1cycle
+        MOV #1312 , R5   ;2cycle
+        cmp #0 , R6     ;1cycle
+        jnz Delay1      ;2cycle
+        jz label1       ;2cycle  
+Delay1:
+        sub #1  , R5    ;1cycle
+        cmp #0  , R5    ;1cycle
+        jnz Delay1      ;2cycle
+        jz Delay1_2     ;2cycle 
+        
+        
+;=======================================         
+ label1: 
+        ;紅亮 綠暗 2 A
+        mov.b  #00000001b , P1OUT
+        mov.b  #00000000b , P4OUT
+                                                   
+        MOV #1000 , R7    
+;==============Delay2迴圈===============
+Delay2_2:
+        sub #1  , R7
+        MOV #525 , R8 
+        cmp #0 , R7
+        jnz Delay2
+        jz label2
+Delay2:
+        sub #1  , R8
+        cmp #0  , R8
+        jnz Delay2
+        jz Delay2_2   
+;=======================================        
+label2:
+        ;紅暗 綠暗 0.6 B
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+        
+        MOV #1000 , R5    
+;==============Delay3迴圈===============
+Delay3_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay3
+        jz label3
+Delay3:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay3
+        jz Delay3_2   
+;=======================================                
+label3:
+        ;紅暗 綠亮 1 C
+        mov.b  #00000000b , P1OUT
+        mov.b  #10000000b , P4OUT   
+        MOV #1000 , R5    
+;==============Delay4迴圈===============
+Delay4_2:
+        sub #1  , R5
+        MOV #264 , R6 
+        cmp #0 , R5
+        jnz Delay4
+        jz label4
+Delay4:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay4
+        jz Delay4_2   
+;=======================================      
+label4:
+        ;紅暗 綠暗 0.6 D
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+        MOV #1000 , R5    
+;==============Delay5迴圈===============
+Delay5_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay5
+        jz label5
+Delay5:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay5
+        jz Delay5_2   
+;=======================================
+label5:
+        ;紅暗 綠亮 1 E
+        mov.b  #00000000b , P1OUT
+        mov.b  #10000000b , P4OUT   
+        MOV #1000 , R5    
+;==============Delay6迴圈===============
+Delay6_2:
+        sub #1  , R5
+        MOV #264 , R6 
+        cmp #0 , R5
+        jnz Delay6
+        jz label6
+Delay6:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay6
+        jz Delay6_2   
+;=======================================
+label6:
+        ;紅暗 綠暗 0.6 F
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay7迴圈===============
+Delay7_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay7
+        jz label7
+Delay7:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay7
+        jz Delay7_2   
+;=======================================
+label7:
+        ;紅暗 綠亮 1 G
+        mov.b  #00000000b , P1OUT
+        mov.b  #10000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay8迴圈===============
+Delay8_2:
+        sub #1  , R5
+        MOV #264 , R6 
+        cmp #0 , R5
+        jnz Delay8
+        jz label8
+Delay8:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay8
+        jz Delay8_2   
+;=======================================
+label8:
+        ;紅暗 綠暗 0.6 H
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay9迴圈===============
+Delay9_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay9
+        jz label9
+Delay9:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay9
+        jz Delay9_2   
+;=======================================
+label9:
+        ;紅暗 綠亮 1 I
+        mov.b  #00000000b , P1OUT
+        mov.b  #10000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay10迴圈===============
+Delay10_2:
+        sub #1  , R5
+        MOV #264 , R6 
+        cmp #0 , R5
+        jnz Delay10
+        jz label10
+Delay10:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay10
+        jz Delay10_2   
+;=======================================
+label10:
+        ;紅暗 綠暗 5 
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay11迴圈===============
+Delay11_2:
+        sub #1  , R5
+        MOV #1312 , R6 
+        cmp #0 , R5
+        jnz Delay11
+        jz label11
+Delay11:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay11
+        jz Delay11_2   
+;=======================================
+label11:
+        ;紅暗 綠亮 1 J
+        mov.b  #00000000b , P1OUT
+        mov.b  #10000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay12迴圈===============
+Delay12_2:
+        sub #1  , R5
+        MOV #264 , R6 
+        cmp #0 , R5
+        jnz Delay12
+        jz label12
+Delay12:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay12
+        jz Delay12_2   
+;=======================================
+label12:
+        ;紅暗 綠暗 0.6 K
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+       
+        MOV #1000 , R5    
+;==============Delay13迴圈===============
+Delay13_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay13
+        jz label13
+Delay13:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay13
+        jz Delay13_2   
+;=======================================
+ label13: 
+        ;紅亮 綠暗 2 L
+        mov.b  #00000001b , P1OUT
+        mov.b  #00000000b , P4OUT
+                                                   
+        MOV #1000 , R7    
+;==============Delay14迴圈===============
+Delay14_2:
+        sub #1  , R7
+        MOV #525 , R8 
+        cmp #0 , R7
+        jnz Delay14
+        jz label14
+Delay14:
+        sub #1  , R8
+        cmp #0  , R8
+        jnz Delay14
+        jz Delay14_2   
+;=======================================        
+label14:
+        ;紅暗 綠暗 0.6 M
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+        
+        MOV #1000 , R5    
+;==============Delay15迴圈===============
+Delay15_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay15
+        jz label15
+Delay15:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay15
+        jz Delay15_2   
+;=======================================  
+ label15: 
+        ;紅亮 綠暗 2 N
+        mov.b  #00000001b , P1OUT
+        mov.b  #00000000b , P4OUT
+                                                   
+        MOV #1000 , R7    
+;==============Delay16迴圈===============
+Delay16_2:
+        sub #1  , R7
+        MOV #525 , R8 
+        cmp #0 , R7
+        jnz Delay16
+        jz label16
+Delay16:
+        sub #1  , R8
+        cmp #0  , R8
+        jnz Delay16
+        jz Delay16_2   
+;=======================================        
+label16:
+        ;紅暗 綠暗 0.6 O
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+        
+        MOV #1000 , R5    
+;==============Delay17迴圈===============
+Delay17_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay17
+        jz label17
+Delay17:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay17
+        jz Delay17_2   
+;=======================================               
+ label17: 
+        ;紅亮 綠暗 2 P
+        mov.b  #00000001b , P1OUT
+        mov.b  #00000000b , P4OUT
+                                                   
+        MOV #1000 , R7    
+;==============Delay18迴圈===============
+Delay18_2:
+        sub #1  , R7
+        MOV #525 , R8 
+        cmp #0 , R7
+        jnz Delay18
+        jz label18
+Delay18:
+        sub #1  , R8
+        cmp #0  , R8
+        jnz Delay18
+        jz Delay18_2   
+;=======================================        
+label18:
+        ;紅暗 綠暗 0.6 Q
+        mov.b  #00000000b , P1OUT
+        mov.b  #00000000b , P4OUT   
+        
+        MOV #1000 , R5    
+;==============Delay19迴圈===============
+Delay19_2:
+        sub #1  , R5
+        MOV #159 , R6 
+        cmp #0 , R5
+        jnz Delay19
+        jz label19
+Delay19:
+        sub #1  , R6
+        cmp #0  , R6
+        jnz Delay19
+        jz Delay19_2   
+;=======================================    
+label19: 
+        ;紅亮 綠暗 2 R
+        mov.b  #00000001b , P1OUT
+        mov.b  #00000000b , P4OUT
+                                                   
+        MOV #1000 , R7    
+;==============Delay20迴圈===============
+Delay20_2:
+        sub #1  , R7
+        MOV #525 , R8 
+        cmp #0 , R7
+        jnz Delay20
+        jz labelend
+Delay20:
+        sub #1  , R8
+        cmp #0  , R8
+        jnz Delay20
+        jz Delay20_2   
+;=======================================        
+        
+labelend:       
+       mov.b  #00000000b , P1OUT
+       mov.b  #00000000b , P4OUT  
+       JMP $
+               
+        
+;=====================================================================        
+        END
